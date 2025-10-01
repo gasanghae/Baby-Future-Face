@@ -18,7 +18,7 @@
 2. 환경 변수 설정:
    `.env.local` 파일을 생성하고 Gemini API 키를 설정하세요:
    ```
-   GEMINI_API_KEY=your_gemini_api_key_here
+   GEMINI_API_KEY=AIzaSyCFwHNB4x1bkE42dgsUy3k_dy-GMxUZS1g
    ```
 
 3. 개발 서버 실행:
