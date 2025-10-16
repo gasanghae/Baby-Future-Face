@@ -110,8 +110,8 @@ const AnimalTransformPage: React.FC = () => {
   const isCreationDone = generatedImageUrl !== null;
 
   return (
-    <div className="min-h-screen p-2 flex flex-col">
-      <main className="flex-grow container mx-auto max-w-7xl w-full grid grid-cols-1 lg:grid-cols-3 gap-2 items-center">
+    <div className="min-h-screen p-1 flex flex-col">
+      <main className="flex-grow container mx-auto max-w-5xl w-full grid grid-cols-1 lg:grid-cols-3 gap-1 items-center">
         <div className="w-full">
           <ImagePanel
             title=""
@@ -122,7 +122,7 @@ const AnimalTransformPage: React.FC = () => {
           />
         </div>
 
-        <div className="flex flex-col items-center justify-center space-y-3 px-2">
+        <div className="flex flex-col items-center justify-center space-y-2 px-1">
             <div className="w-full space-y-4">
                 <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">
