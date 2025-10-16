@@ -110,8 +110,8 @@ const AnimalTransformPage: React.FC = () => {
   const isCreationDone = generatedImageUrl !== null;
 
   return (
-    <div className="min-h-screen p-4 flex flex-col">
-      <main className="flex-grow container mx-auto max-w-6xl w-full grid grid-cols-1 lg:grid-cols-3 gap-6 items-start">
+    <div className="min-h-screen p-4 sm:p-8 flex flex-col">
+      <main className="flex-grow container mx-auto max-w-7xl w-full grid grid-cols-1 lg:grid-cols-3 gap-8 items-center">
         <div className="w-full">
           <ImagePanel
             title=""
@@ -120,13 +120,13 @@ const AnimalTransformPage: React.FC = () => {
             onFileDrop={handleFileDrop}
             inputId="animal-source-image-upload"
           />
-          <div className="text-center mt-3 text-pink-500">
-            <p className="text-sm">사용 방법: 1. 아이의 정면 사진을 업로드하세요. 2. 옵션을 선택하세요. 3. '생성' 버튼을 누르고 잠시 기다려주세요.</p>
-            <p className="text-xs mt-1 text-pink-400">본 결과는 AI에 의해 생성된 가상의 이미지이며 실제와 다를 수 있습니다.</p>
+          <div className="text-center mt-4 p-3 bg-pink-50 rounded-lg border border-pink-200">
+            <p className="text-sm text-pink-600 font-medium">사용 방법: 1. 아이의 정면 사진을 업로드하세요. 2. 옵션을 선택하세요. 3. '생성' 버튼을 누르고 잠시 기다려주세요.</p>
+            <p className="text-xs mt-2 text-pink-500">본 결과는 AI에 의해 생성된 가상의 이미지이며 실제와 다를 수 있습니다.</p>
           </div>
         </div>
 
-        <div className="flex flex-col items-center justify-center space-y-4 px-4">
+        <div className="flex flex-col items-center justify-center space-y-6 px-4">
             <div className="w-full space-y-4">
                 <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -146,7 +146,7 @@ const AnimalTransformPage: React.FC = () => {
                     <label className="block text-sm font-medium text-gray-700 mb-2">
                         스타일 선택
                     </label>
-                    <div className="grid grid-cols-2 gap-2">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                         {styles.map((style) => (
                             <StyleButton key={style} style={style} />
                         ))}
