@@ -101,8 +101,8 @@ const FutureFacePage: React.FC = () => {
   const isCreationDone = generatedImageUrl !== null;
 
   return (
-    <div className="min-h-screen p-1 flex flex-col">
-      <main className="flex-grow container mx-auto max-w-5xl w-full grid grid-cols-1 lg:grid-cols-3 gap-1 items-center">
+    <div className="min-h-screen p-4 flex flex-col">
+      <main className="flex-grow container mx-auto max-w-6xl w-full grid grid-cols-1 lg:grid-cols-3 gap-6 items-start">
         <div className="w-full">
           <ImagePanel
             title=""
@@ -113,7 +113,7 @@ const FutureFacePage: React.FC = () => {
           />
         </div>
 
-        <div className="flex flex-col items-center justify-center space-y-2 px-1">
+        <div className="flex flex-col items-center justify-center space-y-4 px-4">
             <div className="w-full space-y-3">
                 <div className="grid grid-cols-2 gap-4">
                     <GenderButton value={Gender.MALE} label="남자아이" />
