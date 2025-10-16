@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { generateAnimalImage } from '../services/animalService';
+import { incrementUsage, canUse } from '../services/usageLimitService';
 import ImagePanel from './ImagePanel';
+import UsageLimitDisplay from './UsageLimitDisplay';
 import { RefreshIcon, DownloadIcon } from './IconComponents';
 
 const AnimalTransformPage: React.FC = () => {
@@ -48,12 +50,19 @@ const AnimalTransformPage: React.FC = () => {
       setError('사진을 업로드하고 동물 이름과 스타일을 선택해주세요.');
       return;
     }
+
+    if (!canUse()) {
+      setError('일일 사용 한도(10회)를 초과했습니다. 내일 다시 시도해주세요.');
+      return;
+    }
+
     setError(null);
     setIsLoading(true);
     setGeneratedImageUrl(null);
 
     try {
       const resultUrl = await generateAnimalImage(sourceImageFile, animalName.trim(), selectedStyle);
+      incrementUsage();
       setGeneratedImageUrl(resultUrl);
     } catch (err) {
       if (err instanceof Error) {
@@ -102,10 +111,10 @@ const AnimalTransformPage: React.FC = () => {
 
   return (
     <div className="min-h-screen p-4 sm:p-8 flex flex-col">
-      <main className="flex-grow container mx-auto max-w-7xl w-full grid grid-cols-1 lg:grid-cols-3 gap-8 items-center pt-12">
+      <main className="flex-grow container mx-auto max-w-7xl w-full grid grid-cols-1 lg:grid-cols-3 gap-8 items-center pt-4">
         <div className="w-full">
           <ImagePanel
-            title="원본 사진"
+            title=""
             imageUrl={sourceImageUrl}
             onFileChange={handleFileChange}
             onFileDrop={handleFileDrop}
@@ -142,6 +151,8 @@ const AnimalTransformPage: React.FC = () => {
             </div>
           
             {error && <p className="text-red-700 text-center bg-red-100 p-3 rounded-lg border border-red-200">{error}</p>}
+            
+            <UsageLimitDisplay className="mb-4" />
           
             {isCreationDone ? (
                  <div className="w-full space-y-4">
@@ -175,7 +186,7 @@ const AnimalTransformPage: React.FC = () => {
         
         <div className="w-full">
           <ImagePanel
-            title="동물 변신 사진"
+            title=""
             imageUrl={generatedImageUrl}
             isLoading={isLoading}
             inputId="animal-generated-image"

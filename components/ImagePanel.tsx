@@ -47,8 +47,8 @@ const ImagePanel: React.FC<ImagePanelProps> = ({ title, imageUrl, isLoading = fa
   const content = () => {
     if (isLoading) {
       return (
-        <div className="flex flex-col items-center justify-center h-full text-gray-400">
-          <SpinnerIcon className="animate-spin h-12 w-12 mb-4" />
+        <div className="flex flex-col items-center justify-center h-full text-pink-800">
+          <SpinnerIcon className="animate-spin h-12 w-12 mb-4 text-pink-400" />
           <p className="text-lg font-semibold">AI가 미래 모습을 생성중입니다...</p>
           <p className="text-sm">잠시만 기다려주세요.</p>
         </div>
@@ -57,13 +57,13 @@ const ImagePanel: React.FC<ImagePanelProps> = ({ title, imageUrl, isLoading = fa
 
     if (imageUrl) {
       return (
-        <img src={imageUrl} alt={title} className="w-full h-full object-cover rounded-xl" />
+        <img src={imageUrl} alt="Generated or source image" className="w-full h-full object-cover rounded-xl" />
       );
     }
 
     if (onFileChange) {
       return (
-        <label htmlFor={inputId} className="cursor-pointer flex flex-col items-center justify-center h-full text-gray-400 hover:text-blue-400 transition-colors">
+        <label htmlFor={inputId} className="cursor-pointer flex flex-col items-center justify-center h-full text-pink-400 hover:text-pink-500 transition-colors">
           <UploadIcon className="w-16 h-16 mb-4" />
           <h3 className="text-xl font-bold">아이 사진 업로드</h3>
           <p className="mt-1 text-sm">여기로 파일을 드래그하거나 클릭하세요</p>
@@ -73,9 +73,9 @@ const ImagePanel: React.FC<ImagePanelProps> = ({ title, imageUrl, isLoading = fa
     }
 
     return (
-      <div className="flex flex-col items-center justify-center h-full text-gray-500">
-        <div className="w-16 h-16 mb-4 rounded-full bg-gray-700 flex items-center justify-center">
-          <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <div className="flex flex-col items-center justify-center h-full text-pink-400">
+        <div className="w-16 h-16 mb-4 rounded-full bg-pink-100 flex items-center justify-center">
+          <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-pink-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
           </svg>
         </div>
@@ -85,13 +85,12 @@ const ImagePanel: React.FC<ImagePanelProps> = ({ title, imageUrl, isLoading = fa
     );
   };
 
-  const borderColor = isDraggingOver ? 'border-blue-500' : 'border-gray-600';
+  const borderColor = isDraggingOver ? 'border-pink-300' : 'border-pink-200';
 
   return (
     <div className="w-full">
-      <h2 className="text-lg font-semibold text-center mb-3">{title}</h2>
       <div 
-        className={`bg-gray-800 border-2 border-dashed ${borderColor} rounded-xl aspect-square p-4 flex flex-col items-center justify-center transition-all duration-300`}
+        className={`bg-white border-2 border-dashed ${borderColor} rounded-xl aspect-square p-4 flex flex-col items-center justify-center transition-all duration-300`}
         onDragEnter={handleDragEnter}
         onDragLeave={handleDragLeave}
         onDragOver={handleDragOver}

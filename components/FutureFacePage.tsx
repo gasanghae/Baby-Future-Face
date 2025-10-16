@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { Gender } from '../types';
 import { generateFutureImage } from '../services/geminiService';
+import { incrementUsage, canUse } from '../services/usageLimitService';
 import ImagePanel from './ImagePanel';
+import UsageLimitDisplay from './UsageLimitDisplay';
 import { RefreshIcon, DownloadIcon } from './IconComponents';
 
 const FutureFacePage: React.FC = () => {
@@ -39,12 +41,19 @@ const FutureFacePage: React.FC = () => {
       setError('사진을 업로드하고 성별을 선택해주세요.');
       return;
     }
+
+    if (!canUse()) {
+      setError('일일 사용 한도(10회)를 초과했습니다. 내일 다시 시도해주세요.');
+      return;
+    }
+
     setError(null);
     setIsLoading(true);
     setGeneratedImageUrl(null);
 
     try {
       const resultUrl = await generateFutureImage(sourceImageFile, gender);
+      incrementUsage();
       setGeneratedImageUrl(resultUrl);
     } catch (err) {
       if (err instanceof Error) {
@@ -93,10 +102,10 @@ const FutureFacePage: React.FC = () => {
 
   return (
     <div className="min-h-screen p-4 sm:p-8 flex flex-col">
-      <main className="flex-grow container mx-auto max-w-7xl w-full grid grid-cols-1 lg:grid-cols-3 gap-8 items-center pt-12">
+      <main className="flex-grow container mx-auto max-w-7xl w-full grid grid-cols-1 lg:grid-cols-3 gap-8 items-center pt-4">
         <div className="w-full">
           <ImagePanel
-            title="원본 사진"
+            title=""
             imageUrl={sourceImageUrl}
             onFileChange={handleFileChange}
             onFileDrop={handleFileDrop}
@@ -106,7 +115,6 @@ const FutureFacePage: React.FC = () => {
 
         <div className="flex flex-col items-center justify-center space-y-6 px-4">
             <div className="w-full space-y-3">
-                <p className="text-center text-gray-300 font-medium">1. 성별을 선택하세요</p>
                 <div className="grid grid-cols-2 gap-4">
                     <GenderButton value={Gender.MALE} label="남자아이" />
                     <GenderButton value={Gender.FEMALE} label="여자아이" />
@@ -114,6 +122,8 @@ const FutureFacePage: React.FC = () => {
             </div>
           
             {error && <p className="text-red-700 text-center bg-red-100 p-3 rounded-lg border border-red-200">{error}</p>}
+            
+            <UsageLimitDisplay className="mb-4" />
           
             {isCreationDone ? (
                  <div className="w-full space-y-4">
@@ -147,7 +157,7 @@ const FutureFacePage: React.FC = () => {
         
         <div className="w-full">
           <ImagePanel
-            title="AI 예측 사진"
+            title=""
             imageUrl={generatedImageUrl}
             isLoading={isLoading}
             inputId="generated-image"
