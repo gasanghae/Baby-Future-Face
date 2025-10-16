@@ -89,7 +89,7 @@ const AnimalTransformPage: React.FC = () => {
         className={`py-2 px-4 rounded-lg text-sm font-medium transition-all duration-300 ${
           isSelected 
             ? 'bg-pink-400 text-white shadow-md' 
-            : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
+            : 'bg-white text-pink-500 border border-pink-200 hover:bg-pink-100'
         }`}
         disabled={isLoading}
       >
@@ -101,15 +101,8 @@ const AnimalTransformPage: React.FC = () => {
   const isCreationDone = generatedImageUrl !== null;
 
   return (
-    <div className="min-h-screen bg-gray-900 text-white p-4 sm:p-8 flex flex-col">
-      <header className="text-center my-8 sm:my-12">
-        <h1 className="text-4xl sm:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-pink-400 to-purple-500">
-          동물 캐릭터로 변신
-        </h1>
-        <p className="text-lg text-gray-300 mt-2">귀여운 동물로 변신한 우리 아이</p>
-      </header>
-
-      <main className="flex-grow container mx-auto max-w-7xl w-full grid grid-cols-1 lg:grid-cols-3 gap-8 items-center">
+    <div className="min-h-screen p-4 sm:p-8 flex flex-col">
+      <main className="flex-grow container mx-auto max-w-7xl w-full grid grid-cols-1 lg:grid-cols-3 gap-8 items-center pt-12">
         <div className="w-full">
           <ImagePanel
             title="원본 사진"
@@ -123,7 +116,7 @@ const AnimalTransformPage: React.FC = () => {
         <div className="flex flex-col items-center justify-center space-y-6 px-4">
             <div className="w-full space-y-4">
                 <div>
-                    <label className="block text-sm font-medium text-gray-300 mb-2">
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
                         동물 이름
                     </label>
                     <input
@@ -131,13 +124,13 @@ const AnimalTransformPage: React.FC = () => {
                         value={animalName}
                         onChange={(e) => setAnimalName(e.target.value)}
                         placeholder="예: 토끼, 강아지, 고양이..."
-                        className="w-full px-4 py-3 bg-gray-800 border border-gray-600 rounded-lg focus:ring-2 focus:ring-pink-400 focus:border-transparent text-white placeholder-gray-400"
+                        className="w-full px-4 py-3 border border-pink-200 rounded-lg focus:ring-2 focus:ring-pink-400 focus:border-transparent"
                         disabled={isLoading}
                     />
                 </div>
                 
                 <div>
-                    <label className="block text-sm font-medium text-gray-300 mb-2">
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
                         스타일 선택
                     </label>
                     <div className="grid grid-cols-2 gap-2">
@@ -148,21 +141,21 @@ const AnimalTransformPage: React.FC = () => {
                 </div>
             </div>
           
-            {error && <p className="text-red-400 text-center bg-red-900/50 p-3 rounded-lg">{error}</p>}
+            {error && <p className="text-red-700 text-center bg-red-100 p-3 rounded-lg border border-red-200">{error}</p>}
           
             {isCreationDone ? (
                  <div className="w-full space-y-4">
                     <button
                         onClick={handleGenerate}
                         disabled={isLoading}
-                        className="w-full bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-600 hover:to-purple-700 text-white font-bold py-4 px-6 rounded-lg text-xl transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg disabled:shadow-none transform hover:scale-105 flex items-center justify-center gap-2"
+                        className="w-full bg-pink-400 hover:bg-pink-500 text-white font-bold py-4 px-6 rounded-lg text-xl transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg disabled:shadow-none transform hover:scale-105 flex items-center justify-center gap-2"
                     >
                         <RefreshIcon className="w-6 h-6" />
                         다시 만들기
                     </button>
                     <button
                         onClick={handleSave}
-                        className="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-4 px-6 rounded-lg text-xl transition-all duration-300 flex items-center justify-center gap-2 shadow-lg"
+                        className="w-full bg-pink-200 hover:bg-pink-300 text-pink-800 font-bold py-4 px-6 rounded-lg text-xl transition-all duration-300 flex items-center justify-center gap-2 shadow-lg"
                     >
                         <DownloadIcon className="w-6 h-6" />
                         이미지 저장
@@ -172,7 +165,7 @@ const AnimalTransformPage: React.FC = () => {
                 <button
                     onClick={handleGenerate}
                     disabled={isLoading || !sourceImageFile || !animalName.trim() || !selectedStyle}
-                    className="w-full bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-600 hover:to-purple-700 text-white font-bold py-4 px-6 rounded-lg text-xl transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg disabled:shadow-none transform hover:scale-105"
+                    className="w-full bg-pink-400 hover:bg-pink-500 text-white font-bold py-4 px-6 rounded-lg text-xl transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg disabled:shadow-none transform hover:scale-105"
                 >
                     {isLoading ? '생성 중...' : '만들기'}
                 </button>

@@ -79,8 +79,8 @@ const FutureFacePage: React.FC = () => {
         onClick={() => setGender(value)}
         className={`w-full py-3 px-4 rounded-lg text-lg font-semibold transition-all duration-300 flex items-center justify-center gap-2 ${
           isSelected 
-            ? 'bg-blue-600 text-white shadow-lg transform scale-105' 
-            : 'bg-gray-700 hover:bg-gray-600'
+            ? 'bg-pink-400 text-white shadow-lg transform scale-105 border-transparent' 
+            : 'bg-white text-pink-500 border border-pink-200 hover:bg-pink-100'
         }`}
         disabled={isLoading}
       >
@@ -92,15 +92,8 @@ const FutureFacePage: React.FC = () => {
   const isCreationDone = generatedImageUrl !== null;
 
   return (
-    <div className="min-h-screen bg-gray-900 text-white p-4 sm:p-8 flex flex-col">
-      <header className="text-center my-8 sm:my-12">
-        <h1 className="text-4xl sm:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-500">
-          우리 아이의 미래 모습
-        </h1>
-        <p className="text-lg text-gray-300 mt-2">AI 성장 예측 사진</p>
-      </header>
-
-      <main className="flex-grow container mx-auto max-w-7xl w-full grid grid-cols-1 lg:grid-cols-3 gap-8 items-center">
+    <div className="min-h-screen p-4 sm:p-8 flex flex-col">
+      <main className="flex-grow container mx-auto max-w-7xl w-full grid grid-cols-1 lg:grid-cols-3 gap-8 items-center pt-12">
         <div className="w-full">
           <ImagePanel
             title="원본 사진"
@@ -120,21 +113,21 @@ const FutureFacePage: React.FC = () => {
                 </div>
             </div>
           
-            {error && <p className="text-red-400 text-center bg-red-900/50 p-3 rounded-lg">{error}</p>}
+            {error && <p className="text-red-700 text-center bg-red-100 p-3 rounded-lg border border-red-200">{error}</p>}
           
             {isCreationDone ? (
                  <div className="w-full space-y-4">
                     <button
                         onClick={handleGenerate}
                         disabled={isLoading}
-                        className="w-full bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white font-bold py-4 px-6 rounded-lg text-xl transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg disabled:shadow-none transform hover:scale-105 flex items-center justify-center gap-2"
+                        className="w-full bg-pink-400 hover:bg-pink-500 text-white font-bold py-4 px-6 rounded-lg text-xl transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg disabled:shadow-none transform hover:scale-105 flex items-center justify-center gap-2"
                     >
                         <RefreshIcon className="w-6 h-6" />
                         다시 만들기
                     </button>
                     <button
                         onClick={handleSave}
-                        className="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-4 px-6 rounded-lg text-xl transition-all duration-300 flex items-center justify-center gap-2 shadow-lg"
+                        className="w-full bg-pink-200 hover:bg-pink-300 text-pink-800 font-bold py-4 px-6 rounded-lg text-xl transition-all duration-300 flex items-center justify-center gap-2 shadow-lg"
                     >
                         <DownloadIcon className="w-6 h-6" />
                         이미지 저장
@@ -144,7 +137,7 @@ const FutureFacePage: React.FC = () => {
                 <button
                     onClick={handleGenerate}
                     disabled={isLoading || !sourceImageFile || !gender}
-                    className="w-full bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white font-bold py-4 px-6 rounded-lg text-xl transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg disabled:shadow-none transform hover:scale-105"
+                    className="w-full bg-pink-400 hover:bg-pink-500 text-white font-bold py-4 px-6 rounded-lg text-xl transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg disabled:shadow-none transform hover:scale-105"
                 >
                     {isLoading ? '생성 중...' : '만들기'}
                 </button>
