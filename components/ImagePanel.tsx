@@ -90,7 +90,7 @@ const ImagePanel: React.FC<ImagePanelProps> = ({ title, imageUrl, isLoading = fa
   return (
     <div className="w-full">
       <div 
-        className={`bg-white border-2 border-dashed ${borderColor} rounded-xl aspect-square p-4 flex flex-col items-center justify-center transition-all duration-300`}
+        className={`bg-white border-2 border-dashed ${borderColor} rounded-xl aspect-[4/3] p-3 flex flex-col items-center justify-center transition-all duration-300`}
         onDragEnter={handleDragEnter}
         onDragLeave={handleDragLeave}
         onDragOver={handleDragOver}

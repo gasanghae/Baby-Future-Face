@@ -101,8 +101,8 @@ const FutureFacePage: React.FC = () => {
   const isCreationDone = generatedImageUrl !== null;
 
   return (
-    <div className="min-h-screen p-4 sm:p-8 flex flex-col">
-      <main className="flex-grow container mx-auto max-w-7xl w-full grid grid-cols-1 lg:grid-cols-3 gap-8 items-start pt-4">
+    <div className="p-2 sm:p-4 flex flex-col">
+      <main className="container mx-auto max-w-7xl w-full grid grid-cols-1 lg:grid-cols-3 gap-4 items-start">
         <div className="w-full">
           <ImagePanel
             title=""
