@@ -18,7 +18,7 @@ const App: React.FC = () => {
   };
 
   return (
-    <div className="bg-pink-50 h-[700px]">
+    <div className="bg-pink-50 min-h-screen">
       <Navigation currentPage={currentPage} onPageChange={setCurrentPage} />
       {renderCurrentPage()}
     </div>

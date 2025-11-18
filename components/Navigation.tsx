@@ -23,7 +23,7 @@ const Navigation: React.FC<NavigationProps> = ({ currentPage, onPageChange }) =>
                 : 'text-pink-500 hover:bg-pink-100'
             }`}
           >
-            🧒 아이의 미래 모습
+            🧒 미래에서 만나는 우리아이
           </button>
           <button
             onClick={() => onPageChange(PageType.ANIMAL_TRANSFORM)}
@@ -33,7 +33,7 @@ const Navigation: React.FC<NavigationProps> = ({ currentPage, onPageChange }) =>
                 : 'text-pink-500 hover:bg-pink-100'
             }`}
           >
-            🐰 동물 캐릭터로 변신
+            🐰 아기 동물로 변신!
           </button>
         </div>
       </div>

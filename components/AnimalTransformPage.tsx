@@ -14,13 +14,18 @@ const AnimalTransformPage: React.FC = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
 
+  const animals = [
+    '강아지', '고양이', '햄스터', '토끼', '펭귄', '여우',
+    '곰', '판다', '코끼리', '사자', '호랑이'
+  ];
+
   const styles = [
     '지브리 스타일',
-    '디즈니 스타일', 
-    '픽사 스타일',
-    '일러스트 스타일',
-    '수채화 스타일',
-    '만화 스타일'
+    '디즈니 2D 스타일',
+    '픽사 3D 스타일',
+    '산리오 스타일',
+    '수채화 동화 스타일',
+    '어드벤처 타임 스타일'
   ];
 
   const processFile = (file: File) => {
@@ -46,8 +51,8 @@ const AnimalTransformPage: React.FC = () => {
   };
 
   const handleGenerate = async () => {
-    if (!sourceImageFile || !animalName.trim() || !selectedStyle) {
-      setError('사진을 업로드하고 동물 이름과 스타일을 선택해주세요.');
+    if (!sourceImageFile || !animalName || !selectedStyle) {
+      setError('사진을 업로드하고 동물과 스타일을 선택해주세요.');
       return;
     }
 
@@ -61,7 +66,7 @@ const AnimalTransformPage: React.FC = () => {
     setGeneratedImageUrl(null);
 
     try {
-      const resultUrl = await generateAnimalImage(sourceImageFile, animalName.trim(), selectedStyle);
+      const resultUrl = await generateAnimalImage(sourceImageFile, animalName, selectedStyle);
       incrementUsage();
       setGeneratedImageUrl(resultUrl);
     } catch (err) {
@@ -88,6 +93,23 @@ const AnimalTransformPage: React.FC = () => {
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
+  };
+
+  const AnimalButton: React.FC<{ animal: string }> = ({ animal }) => {
+    const isSelected = animalName === animal;
+    return (
+      <button
+        onClick={() => setAnimalName(animal)}
+        className={`py-2 px-4 rounded-lg text-sm font-medium transition-all duration-300 ${
+          isSelected 
+            ? 'bg-pink-400 text-white shadow-md' 
+            : 'bg-white text-pink-500 border border-pink-200 hover:bg-pink-100'
+        }`}
+        disabled={isLoading}
+      >
+        {animal}
+      </button>
+    );
   };
 
   const StyleButton: React.FC<{ style: string }> = ({ style }) => {
@@ -130,16 +152,13 @@ const AnimalTransformPage: React.FC = () => {
             <div className="w-full space-y-4">
                 <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">
-                        동물 이름
+                        동물 선택
                     </label>
-                    <input
-                        type="text"
-                        value={animalName}
-                        onChange={(e) => setAnimalName(e.target.value)}
-                        placeholder="예: 토끼, 강아지, 고양이..."
-                        className="w-full px-4 py-3 border border-pink-200 rounded-lg focus:ring-2 focus:ring-pink-400 focus:border-transparent"
-                        disabled={isLoading}
-                    />
+                    <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+                        {animals.map((animal) => (
+                            <AnimalButton key={animal} animal={animal} />
+                        ))}
+                    </div>
                 </div>
                 
                 <div>
@@ -179,7 +198,7 @@ const AnimalTransformPage: React.FC = () => {
             ) : (
                 <button
                     onClick={handleGenerate}
-                    disabled={isLoading || !sourceImageFile || !animalName.trim() || !selectedStyle}
+                    disabled={isLoading || !sourceImageFile || !animalName || !selectedStyle}
                     className="w-full bg-pink-400 hover:bg-pink-500 text-white font-bold py-4 px-6 rounded-lg text-xl transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg disabled:shadow-none transform hover:scale-105"
                 >
                     {isLoading ? '생성 중...' : '만들기'}
