@@ -1,4 +1,4 @@
-const DAILY_LIMIT = 10;
+const DAILY_LIMIT = 20;
 const STORAGE_KEY = 'daily_usage_count';
 const STORAGE_DATE_KEY = 'usage_date';
 

@@ -45,7 +45,7 @@ const AnimalTransformPage: React.FC = () => {
       processFile(file);
     }
   };
-  
+
   const handleFileDrop = (file: File) => {
     processFile(file);
   };
@@ -57,7 +57,7 @@ const AnimalTransformPage: React.FC = () => {
     }
 
     if (!canUse()) {
-      setError('일일 사용 한도(10회)를 초과했습니다. 내일 다시 시도해주세요.');
+      setError('일일 사용 한도(20회)를 초과했습니다. 내일 다시 시도해주세요.');
       return;
     }
 
@@ -85,7 +85,7 @@ const AnimalTransformPage: React.FC = () => {
 
     const link = document.createElement('a');
     link.href = generatedImageUrl;
-    
+
     const mimeType = generatedImageUrl.match(/data:(.*);base64,/)?.[1];
     const extension = mimeType ? mimeType.split('/')[1] : 'png';
 
@@ -100,11 +100,10 @@ const AnimalTransformPage: React.FC = () => {
     return (
       <button
         onClick={() => setAnimalName(animal)}
-        className={`py-2 px-4 rounded-lg text-sm font-medium transition-all duration-300 ${
-          isSelected 
-            ? 'bg-pink-400 text-white shadow-md' 
-            : 'bg-white text-pink-500 border border-pink-200 hover:bg-pink-100'
-        }`}
+        className={`py-2.5 px-3 rounded-xl text-sm font-bold transition-all duration-300 ${isSelected
+            ? 'bg-gradient-to-r from-pink-500 to-purple-500 text-white shadow-md transform scale-105'
+            : 'bg-white text-gray-600 border border-gray-200 shadow-sm hover:border-pink-300 hover:bg-pink-50'
+          }`}
         disabled={isLoading}
       >
         {animal}
@@ -117,103 +116,130 @@ const AnimalTransformPage: React.FC = () => {
     return (
       <button
         onClick={() => setSelectedStyle(style)}
-        className={`py-2 px-4 rounded-lg text-sm font-medium transition-all duration-300 ${
-          isSelected 
-            ? 'bg-pink-400 text-white shadow-md' 
-            : 'bg-white text-pink-500 border border-pink-200 hover:bg-pink-100'
-        }`}
+        className={`py-3 px-4 rounded-xl text-sm font-bold transition-all duration-300 ${isSelected
+            ? 'bg-gradient-to-r from-purple-500 to-indigo-500 text-white shadow-md transform scale-105'
+            : 'bg-white text-gray-600 border border-gray-200 shadow-sm hover:border-purple-300 hover:bg-purple-50'
+          }`}
         disabled={isLoading}
       >
         {style}
       </button>
     );
   };
-  
+
   const isCreationDone = generatedImageUrl !== null;
 
   return (
-    <div className="p-2 sm:p-4 flex flex-col">
-      <main className="container mx-auto max-w-7xl w-full grid grid-cols-1 lg:grid-cols-3 gap-4 items-start">
-        <div className="w-full">
-          <ImagePanel
-            title=""
-            imageUrl={sourceImageUrl}
-            onFileChange={handleFileChange}
-            onFileDrop={handleFileDrop}
-            inputId="animal-source-image-upload"
-          />
-          <div className="text-center mt-4 p-3 bg-pink-50 rounded-lg border border-pink-200">
-            <p className="text-sm text-pink-600 font-medium">사용 방법: 1. 아이의 정면 사진을 업로드하세요. 2. 옵션을 선택하세요. 3. '생성' 버튼을 누르고 잠시 기다려주세요.</p>
-            <p className="text-xs mt-2 text-pink-500">본 결과는 AI에 의해 생성된 가상의 이미지이며 실제와 다를 수 있습니다.</p>
+    <div className="flex flex-col items-center w-full">
+      <div className="text-center mb-8 space-y-2">
+        <h1 className="text-4xl md:text-5xl font-black text-gray-900 tracking-tight">
+          <span className="gradient-text">아기 동물 변신</span>
+        </h1>
+        <p className="text-gray-500 font-medium">우리 아이가 귀여운 동물 캐릭터가 된다면?</p>
+      </div>
+
+      <main className="w-full grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
+        <div className="w-full space-y-6">
+          <div className="glass-panel rounded-3xl p-6 transition-all duration-300 hover:shadow-xl">
+            <ImagePanel
+              title="아이 사진 업로드"
+              imageUrl={sourceImageUrl}
+              onFileChange={handleFileChange}
+              onFileDrop={handleFileDrop}
+              inputId="animal-source-image-upload"
+            />
+          </div>
+          <div className="glass-panel rounded-2xl p-5 text-center">
+            <p className="text-sm text-gray-600 font-medium leading-relaxed">
+              <span className="block mb-2 text-pink-500 font-bold">💡 사용 팁</span>
+              정면을 바라보는 선명한 사진을 올려주세요.<br />
+              얼굴이 잘 보일수록 더 정확한 결과가 나옵니다.
+            </p>
           </div>
         </div>
 
-        <div className="flex flex-col items-center justify-center space-y-6 px-4">
-            <div className="w-full space-y-4">
-                <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                        동물 선택
-                    </label>
-                    <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
-                        {animals.map((animal) => (
-                            <AnimalButton key={animal} animal={animal} />
-                        ))}
-                    </div>
-                </div>
-                
-                <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                        스타일 선택
-                    </label>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                        {styles.map((style) => (
-                            <StyleButton key={style} style={style} />
-                        ))}
-                    </div>
-                </div>
+        <div className="flex flex-col items-center justify-center space-y-8 py-4">
+          <div className="w-full space-y-6">
+            <div>
+              <label className="block text-sm font-bold text-gray-700 mb-3 ml-1">
+                동물 선택 🐾
+              </label>
+              <div className="grid grid-cols-3 sm:grid-cols-3 gap-2">
+                {animals.map((animal) => (
+                  <AnimalButton key={animal} animal={animal} />
+                ))}
+              </div>
             </div>
-          
-            {error && <p className="text-red-700 text-center bg-red-100 p-3 rounded-lg border border-red-200">{error}</p>}
-            
-            <UsageLimitDisplay className="mb-4" />
-          
-            {isCreationDone ? (
-                 <div className="w-full space-y-4">
-                    <button
-                        onClick={handleGenerate}
-                        disabled={isLoading}
-                        className="w-full bg-pink-400 hover:bg-pink-500 text-white font-bold py-4 px-6 rounded-lg text-xl transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg disabled:shadow-none transform hover:scale-105 flex items-center justify-center gap-2"
-                    >
-                        <RefreshIcon className="w-6 h-6" />
-                        다시 만들기
-                    </button>
-                    <button
-                        onClick={handleSave}
-                        className="w-full bg-pink-200 hover:bg-pink-300 text-pink-800 font-bold py-4 px-6 rounded-lg text-xl transition-all duration-300 flex items-center justify-center gap-2 shadow-lg"
-                    >
-                        <DownloadIcon className="w-6 h-6" />
-                        이미지 저장
-                    </button>
-                 </div>
-            ) : (
-                <button
-                    onClick={handleGenerate}
-                    disabled={isLoading || !sourceImageFile || !animalName || !selectedStyle}
-                    className="w-full bg-pink-400 hover:bg-pink-500 text-white font-bold py-4 px-6 rounded-lg text-xl transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg disabled:shadow-none transform hover:scale-105"
-                >
-                    {isLoading ? '생성 중...' : '만들기'}
-                </button>
-            )}
+
+            <div>
+              <label className="block text-sm font-bold text-gray-700 mb-3 ml-1">
+                스타일 선택 🎨
+              </label>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                {styles.map((style) => (
+                  <StyleButton key={style} style={style} />
+                ))}
+              </div>
+            </div>
+          </div>
+
+          {error && (
+            <div className="w-full bg-red-50/80 backdrop-blur-sm border border-red-200 text-red-600 px-4 py-3 rounded-xl text-sm font-medium text-center animate-pulse">
+              {error}
+            </div>
+          )}
+
+          <div className="w-full flex justify-center">
+            <UsageLimitDisplay className="glass-button px-4 py-2 rounded-full text-sm font-medium text-gray-600" />
+          </div>
+
+          {isCreationDone ? (
+            <div className="w-full space-y-4">
+              <button
+                onClick={handleGenerate}
+                disabled={isLoading}
+                className="w-full bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-600 hover:to-purple-700 text-white font-bold py-4 px-6 rounded-2xl text-xl transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed shadow-xl shadow-purple-500/20 transform hover:scale-[1.02] flex items-center justify-center gap-2"
+              >
+                <RefreshIcon className="w-6 h-6" />
+                다시 만들기
+              </button>
+              <button
+                onClick={handleSave}
+                className="w-full glass-button hover:bg-white/40 text-gray-800 font-bold py-4 px-6 rounded-2xl text-xl transition-all duration-300 flex items-center justify-center gap-2"
+              >
+                <DownloadIcon className="w-6 h-6" />
+                이미지 저장
+              </button>
+            </div>
+          ) : (
+            <button
+              onClick={handleGenerate}
+              disabled={isLoading || !sourceImageFile || !animalName || !selectedStyle}
+              className="w-full bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-600 hover:to-purple-700 text-white font-bold py-4 px-6 rounded-2xl text-xl transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed shadow-xl shadow-purple-500/20 transform hover:scale-[1.02] active:scale-95"
+            >
+              {isLoading ? (
+                <span className="flex items-center gap-2">
+                  <svg className="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                  </svg>
+                  생성 중...
+                </span>
+              ) : '변신하기 ✨'}
+            </button>
+          )}
 
         </div>
-        
+
         <div className="w-full">
-          <ImagePanel
-            title=""
-            imageUrl={generatedImageUrl}
-            isLoading={isLoading}
-            inputId="animal-generated-image"
-          />
+          <div className="glass-panel rounded-3xl p-6 transition-all duration-300 hover:shadow-xl h-full min-h-[400px] flex flex-col">
+            <ImagePanel
+              title="생성된 이미지"
+              imageUrl={generatedImageUrl}
+              isLoading={isLoading}
+              inputId="animal-generated-image"
+            />
+          </div>
         </div>
       </main>
     </div>

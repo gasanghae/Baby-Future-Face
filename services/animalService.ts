@@ -69,8 +69,23 @@ export const generateAnimalImage = async (imageFile: File, animalName: string, s
     }
 
     throw new Error('AI가 이미지를 생성하지 못했습니다. 다른 사진으로 시도해보세요.');
-  } catch (error) {
+  } catch (error: any) {
     console.error('Error generating animal image:', error);
-    throw new Error('이미지 생성 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요.');
+    
+    // 더 자세한 에러 메시지 제공
+    if (error?.message?.includes('quota') || error?.message?.includes('429')) {
+      throw new Error('API 사용 한도를 초과했습니다. 잠시 후 다시 시도해주세요.');
+    }
+    
+    if (error?.message?.includes('API key') || error?.message?.includes('401')) {
+      throw new Error('API 키 인증에 실패했습니다. 설정을 확인해주세요.');
+    }
+    
+    if (error?.message?.includes('network') || error?.message?.includes('fetch')) {
+      throw new Error('네트워크 연결을 확인해주세요.');
+    }
+    
+    const errorMessage = error?.message || '알 수 없는 오류';
+    throw new Error(`이미지 생성 중 오류가 발생했습니다: ${errorMessage}`);
   }
 };

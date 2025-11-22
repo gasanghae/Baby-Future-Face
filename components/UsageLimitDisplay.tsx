@@ -7,14 +7,14 @@ interface UsageLimitDisplayProps {
 
 const UsageLimitDisplay: React.FC<UsageLimitDisplayProps> = ({ className = '' }) => {
   const usageInfo = getUsageInfo();
-  const percentage = (usageInfo.count / 10) * 100;
+  const percentage = (usageInfo.count / 20) * 100;
 
   return (
     <div className={`bg-pink-50 border border-pink-200 rounded-lg p-4 ${className}`}>
       <div className="flex items-center justify-between mb-2">
         <span className="text-sm font-medium text-pink-700">일일 사용량</span>
         <span className="text-sm text-pink-600">
-          {usageInfo.count}/10회
+          {usageInfo.count}/20회
         </span>
       </div>
       
